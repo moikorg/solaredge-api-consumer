@@ -1,0 +1,15 @@
+version: "2"
+
+services:
+  sensor_solaredge:
+    build: .
+    volumes:
+      - ./code:/code
+    tty: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    restart: always
+    environment:
+      - TZ=Europe/Zurich
