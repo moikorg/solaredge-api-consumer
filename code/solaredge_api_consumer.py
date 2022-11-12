@@ -107,10 +107,8 @@ def write2InfluxDB_energy(conf, dt_energy, energy_value):
     with InfluxDBClient(conf['url'], token=conf['token'], org=conf['org']) as client:
         write_api = client.write_api(write_options=SYNCHRONOUS)
 
-#        ts = strftime("%Y-%m-%dT%H:%M:%S+01:00", gmtime()) 
         ts = dt_energy
-        p = Point("sol1").time(ts).field("energy", int(energy_value)).tag("location", conf['location'])
-#            .tag("location", conf['location'])\    # no tag added, otherwise overwriting is not possible
+        p = Point(conf['measurement']).time(ts).field("energy", int(energy_value)).tag("location", conf['location'])
         write_api.write(bucket=conf['bucket'], org=conf['org'], record=p)
 
 
